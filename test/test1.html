@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+    <title>Title</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        .component{
+            width: 100%;
+            height:100%;
+            margin-bottom: 10px;
+            background: green;
+
+        }
+    </style>
+    <!--
+
+        验证是否加载进去;在控制台console依次输入一下操作可以得到一个元素，即可验证
+        $
+        jQuery
+        jQuery('body')
+
+    -->
+
+    <script src="../js/lib/jquery-1.8.3.min.js"></script>
+    <script src="../js/lib/jquery-ui.js"></script>
+    <!--
+
+        验证是否加载进去;在控制台console依次输入一下操作可以得到一个元素，即可验证
+        $
+        jQuery
+        a=jQuery('body')
+
+    -->
+    <script src="../js/lib/jquery.fullPage.js"></script>
+    <script>
+            $(function(){
+                $('#h5').fullpage({
+                    'sectionsColor':['#257875','#00ff00','#257875','#695684'],
+                    onLeave:function(index,nextIndex,direction){  //滚动前的回调函数
+                        $('#h5').find('.page').eq(index-1).trigger('onLeave');  //trigger() 方法触发被选元素的指定事件类型。
+                    },
+                    afterLoad:function(anchorLink ,index){
+                        $('#h5').find('.page').eq(index-1).trigger('onLoad');
+                    }
+                });
+
+                $('.page').on('onLeave',function(){
+                    /* 验证
+                    * 输入 $('.page')可以得到三个元素(页面)
+                    *$('.page').trigger("onLeave")  可以得到三个内容
+                    *
+                    * */
+                    console.log($(this).attr('id'),"====>","onLeave");  //得到当前页面id  +  字符串  + 执行的事件
+                    $(this).find('.component').trigger('onLeave');
+
+                });
+                $('.page').on('onLoad',function(){
+                    console.log($(this).attr('id'),"====>","onLoad");  //得到当前页面id  +  字符串  + 执行的事件
+                    $(this).find('.component').trigger('onLoad');
+                });
+                $('.compoent').on('onLoad',function(){
+                    $(this).fadeIn();  //显示
+                    return false;
+                });
+                $('.compoent').on('onLeave',function(){
+                    $(this).fadeOut();  //隐藏
+                    return false;
+                });
+            });
+    </script>
+
+</head>
+<body>
+<!--用于验证fullPage.js切换页面，以及内容结构可用，组件能够进行动画-->
+
+
+<div id="h5">
+    <!--页面一-->
+    <div class="page section" id="page-1">
+        <div class="compoent lo">loge</div>
+        <div class="compoent loa">slogan</div>
+    </div>
+    <!--页面二-->
+    <div class="page section" id="page-2">
+        <div class="compoent desc">描述</div>
+    </div>
+    <!--页面三-->
+    <div class="page section" id="page-3">
+        <div class="compoent bar">柱状图</div>
+    </div>
+</div>
+</body>
+</html>

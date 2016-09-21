@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="css/H5ComponentBase.css">
+    <style>
+       body{
+           margin: 0;
+           padding: 0;
+           background: #000000;
+           font-size: 12px;
+       }
+        .iphone{
+            width: 340px;
+            height: 540px;
+            background: green;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin: -270px 0 0 -170px;
+        }
+    </style>
+    <script src="../js/lib/jquery-1.8.3.min.js"></script>
+    <script src="js/H5ComponentBase.js"></script>
+
+</head>
+<body>
+<!--用于验证开发测试 H5ComponentBase 对象(基本图文组件)-->
+
+<div class="iphone">
+
+</div>
+<script>
+    var cfg={
+        type:'base', //没有什么意义
+        text:'whejfhvsdf',
+        bg:"face_img_left.png",
+        width:400,
+        height:400,
+        css:{
+            left:50,
+            bottom:0,
+            opacity:0
+        },
+        //动画
+        animateIn:{bottom:80,opacity:1},
+        animateOut:{bottom:0,opacity:0},
+        center:true
+    };
+//    验证是否加载  在控制台输入h5
+    var h5=new H5ComponentBase("name",cfg);
+    $('.iphone').append(h5);
+
+
+
+    //
+    var leave=true;
+    $('body').click(function(){
+        leave=!leave;
+        $(".h5_component").trigger(leave?"onLeave":"onLoad");  //判断是否离开,离开了就执行onLeave
+    })
+</script>
+</body>
+</html>
